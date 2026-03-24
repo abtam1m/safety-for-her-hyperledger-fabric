@@ -1,0 +1,288 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 20px;
+}
+
+.card {
+  width: 420px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 28px 32px;
+}
+
+/* Logo */
+.logoWrap {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.logoIcon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+
+.logoName {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.logoSub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 3px;
+  font-family: var(--mono);
+}
+
+/* Tabs */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg3);
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: 20px;
+  gap: 3px;
+}
+
+.tab {
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-size: 12px;
+  font-family: var(--font);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s;
+  font-weight: 400;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tabActive {
+  background: var(--surface2);
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 13px;
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.labelHint {
+  color: var(--text3);
+  font-weight: 400;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font);
+  outline: none;
+  transition: border 0.15s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--accent);
+}
+
+.input::placeholder {
+  color: var(--text3);
+}
+
+/* Alerts */
+.error {
+  background: var(--danger-dim);
+  border: 1px solid #5a2020;
+  color: var(--danger);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.successMsg {
+  background: var(--success-dim);
+  border: 1px solid #1a5a40;
+  color: var(--success);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* Signup info box */
+.signupInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--accent-dim);
+  border: 1px solid #2a3a7a;
+  color: #7aa2ff;
+  border-radius: 7px;
+  padding: 10px 12px;
+  font-size: 11px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.loginBtn {
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: var(--font);
+  margin-bottom: 8px;
+}
+
+.loginBtn:hover:not(:disabled) {
+  background: var(--accent2);
+}
+
+.loginBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text3);
+  margin: 16px 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Quick logins */
+.quickLogins {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.quickBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+
+.quickBtn:hover {
+  background: var(--surface2);
+  border-color: var(--border2);
+}
+
+.quickBtnActive {
+  border-color: var(--accent) !important;
+  background: var(--accent-dim) !important;
+}
+
+.quickDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.quickRole {
+  font-size: 12px;
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 500;
+}
+
+.quickCred {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-top: 1px;
+}
+
+.quickOrg {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+
+/* Signup footer */
+.signupFooter {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font);
+  padding: 0;
+}
+
+.linkBtn:hover {
+  text-decoration: underline;
+}

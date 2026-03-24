@@ -1,0 +1,94 @@
+/* Stat grid */
+.statGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+@media (max-width: 900px) { .statGrid { grid-template-columns: repeat(2, 1fr); } }
+
+/* Two column layout */
+.twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 800px) { .twoCol { grid-template-columns: 1fr; } }
+
+/* Two column form */
+.twoColForm { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Timeline */
+.timeline { padding: 0; }
+.tlItem { display: flex; gap: 12px; padding-bottom: 16px; }
+.tlItem:last-child { padding-bottom: 0; }
+.tlDotWrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+.tlDot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+.tlLine { flex: 1; width: 1px; background: var(--border); margin-top: 4px; min-height: 16px; }
+.tlContent { flex: 1; }
+.tlAction { font-size: 12px; color: var(--text); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.tlMeta { font-size: 10px; color: var(--text3); margin-top: 3px; font-family: var(--mono); }
+
+/* Info rows */
+.infoRow { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.infoRow:last-child { border-bottom: none; }
+.infoKey { color: var(--text3); font-size: 11px; }
+.infoGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.infoVal { font-size: 12px; color: var(--text); margin-top: 2px; }
+
+/* Status row */
+.statusRow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.statusMsg { font-size: 12px; color: var(--text2); margin-bottom: 14px; line-height: 1.6; }
+
+/* Referral row */
+.refRow { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.refRow:last-child { border-bottom: none; }
+.metaText { font-size: 10px; color: var(--text3); margin-top: 2px; }
+
+/* Toolbar */
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.filterSelect { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius); padding: 5px 10px; color: var(--text2); font-size: 11px; font-family: var(--font); outline: none; cursor: pointer; }
+
+/* Utilities */
+.mono { font-family: var(--mono); font-size: 11px; color: var(--text2); }
+.dimText { font-size: 11px; color: var(--text3); }
+.formLabel { font-size: 11px; color: var(--text2); font-weight: 500; margin-bottom: 5px; display: block; }
+
+/* Evidence badges */
+.evBadge { display: inline-flex; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-family: var(--mono); font-weight: 500; }
+.evVerified { background: var(--success-dim); color: var(--success); }
+.evPending  { background: #1a2a5e; color: #7aa2ff; }
+
+/* Referral status badges */
+.badge { display: inline-flex; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-family: var(--mono); font-weight: 500; }
+.badge-resolved   { background: var(--success-dim); color: var(--success); }
+.badge-withdrawn  { background: var(--bg3); color: var(--text3); }
+.badge-submitted  { background: #1a2a5e; color: #7aa2ff; }
+.badge-default    { background: var(--bg3); color: var(--text3); }
+.caseGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.caseCard {
+  padding: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.caseCard:hover {
+  border: 2px solid #cf3977;
+}
+
+.active {
+  border: 2px solid #4f46e5;
+}
+
+.preview {
+  margin-top: 10px;
+  padding: 10px;
+  background: #031324;
+  border-radius: 8px;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+.dimText {
+  color: #666;
+  font-size: 12px;
+}
