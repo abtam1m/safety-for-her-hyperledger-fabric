@@ -3,11 +3,13 @@
 
 const { Contract } = require('fabric-contract-api');
 const crypto = require('crypto');
-const {KeyEndorsementPolicy} = require('fabric-shim')
 class ReportContract extends Contract {
 
-  async CreateReport(ctx, description, category) {
-
+  async CreateReport(ctx, description, category, victimTokenHash) {
+    
+    if (!victimTokenHash) {
+      throw new Error('victimTokenHash required');
+    }
     // Generate anonymous report ID (not linked to identity)
     const txId = ctx.stub.getTxID();
     const timestamp = ctx.stub.getTxTimestamp();
@@ -18,17 +20,11 @@ class ReportContract extends Contract {
       .substring(0, 16)
       .toUpperCase();
 
-    // Generate anonymous victim token
-    // Victim saves this token privately to track their case
-    // const victimToken = crypto
-    //   .createHash('sha256')
-    //   .update(txId + Math.random().toString())
-    //   .digest('hex');
-
     const report = {
       reportId,
       category,           // e.g. "online_harassment", "image_abuse", "stalking"
       description,        // what happened (no identity info)
+      victimTokenHash,    // hash of the victim's private token
       status: 'SUBMITTED',
       createdAt: new Date(timestamp.seconds.low * 1000).toISOString(),
       lastUpdated: new Date(timestamp.seconds.low * 1000).toISOString(),
@@ -49,12 +45,6 @@ class ReportContract extends Contract {
       console.error("Error storing report:", err);
       throw new Error('Failed to create report');
     }
-    // await ctx.stub.putState(
-    //   `REPORT_${reportId}`,
-    //   Buffer.from(JSON.stringify(report))
-    // );
-
-    // --- Org1-only endorsement for creation ---
     
     // Emit event for case handlers to pick up
     ctx.stub.setEvent('ReportCreated', Buffer.from(JSON.stringify({
@@ -64,12 +54,8 @@ class ReportContract extends Contract {
       // NO victim identity in event
     })));
 
-    // Return reportId and victimToken to victim ONLY
-    // victimToken is never stored on chain
     return JSON.stringify({
-      
       reportId,
-              
       message: 'Report submitted anonymously. Save your token to track this case.'
     });
   }
@@ -89,6 +75,12 @@ class ReportContract extends Contract {
       throw new Error('Invalid token. Access denied.');
     }
 
+    // SAFE timeline (no actor/org leak)
+    const timeline = (report.accessLog || []).map(log => ({
+      action: log.action,
+      status: log.newStatus || null,
+      timestamp: log.timestamp
+    }));
     // Return status without sensitive internal details
     return JSON.stringify({
       reportId: report.reportId,
@@ -97,7 +89,8 @@ class ReportContract extends Contract {
       createdAt: report.createdAt,
       lastUpdated: report.lastUpdated,
       assignedTo: report.assignedTo ? 'A case handler has been assigned' : 'Pending assignment',
-      message: this._getStatusMessage(report.status)
+      message: this._getStatusMessage(report.status),
+      timeline
     });
   }
 

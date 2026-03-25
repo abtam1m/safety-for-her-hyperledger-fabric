@@ -21,10 +21,21 @@ router.post('/', authenticate, upload.array('files', 10), async (req, res) => {
     if (!description || !category) {
       return res.status(400).json({ error: 'description and category are required' });
     }
+    // Generate victim token (ONLY HERE)
+    const victimToken = crypto.randomBytes(16).toString('hex');
 
+    const victimTokenHash = crypto
+      .createHash('sha256')
+      .update(victimToken)
+      .digest('hex');
     // 1. Create report on chain
     const reportResult = JSON.parse(
-      await submitTransaction('Org1MSP', 'CreateReport', description, category)
+      await submitTransaction(
+      'Org1MSP', 
+      'CreateReport', 
+      description,
+      category, 
+      victimTokenHash)
     );
     const reportId = reportResult.reportId;
 
@@ -78,9 +89,9 @@ router.post('/', authenticate, upload.array('files', 10), async (req, res) => {
       success: true,
       data: {
         reportId,
-        
+        victimToken,
         evidenceCount: evidenceResults.length,
-        evidence:      evidenceResults,
+        evidence: evidenceResults,
         message: 'Report and evidence submitted successfully'
       }
     });
@@ -103,9 +114,18 @@ router.get('/status/:reportId', async (req, res) => {
       req.params.reportId,
       victimToken
     );
-    res.json({ success: true, data: result });
+    let data;
+    try {
+      data = typeof result === 'string'
+        ? JSON.parse(result)
+        : result;
+    } catch {
+      data = result;
+    }
+
+    res.json(data);
   } catch (err) {
-    res.status(403).json({ error: err.message });
+    res.status(403).json({ error: err.details || err.message || 'Access denied' });
   }
 });
 
