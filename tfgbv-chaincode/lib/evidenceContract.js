@@ -51,27 +51,50 @@ class EvidenceContract extends Contract {
     });
   }
   async GetEvidenceByReport(ctx, reportId) {
+
     const mspId = ctx.clientIdentity.getMSPID();
+
     if (mspId !== 'Org2MSP' && mspId !== 'Org3MSP') {
       throw new Error('Unauthorized');
     }
-    const iterator = await ctx.stub.getStateByRange(`EVD_${reportId}_`, `EVD_${reportId}_~`);
+
+    const iterator = await ctx.stub.getStateByRange(
+      `EVD_${reportId}_`,
+      `EVD_${reportId}_~`
+    );
+
     const results = [];
-    const timex = ctx.stub.getTxTimestamp();
+
     let result = await iterator.next();
+
     while (!result.done) {
+
       const ev = JSON.parse(result.value.value.toString());
-      // Log access
+
+      // log access
+      ev.accessLog = ev.accessLog || [];
+
+      const timex = ctx.stub.getTxTimestamp();
+      const timestamp = new Date(timex.seconds.low * 1000).toISOString();
+
       ev.accessLog.push({
         action: 'EVIDENCE_ACCESSED',
-        actor: crypto.createHash('sha256').update(ctx.clientIdentity.getID()).digest('hex').substring(0, 12),
+        actor: crypto.createHash('sha256')
+          .update(ctx.clientIdentity.getID())
+          .digest('hex')
+          .substring(0, 12),
         org: mspId,
-        timestamp: new Date(timex.seconds.low * 1000).toISOString()
+        timestamp
       });
-      await ctx.stub.putState(ev.evidenceId, Buffer.from(JSON.stringify(ev)));
+
+      // ✅ FIXED: use correct key
+      await ctx.stub.putState(result.value.key, Buffer.from(JSON.stringify(ev)));
+
       results.push(ev);
+
       result = await iterator.next();
     }
+
     return JSON.stringify(results);
   }
 

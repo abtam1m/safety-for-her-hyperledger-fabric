@@ -75,12 +75,13 @@ router.get('/report/:reportId', requireOrg('Org2MSP', 'Org3MSP'), async (req, re
   try {
     const result = await evaluateTransaction(
       req.org,
-      'GetEvidenceByReport',
+      'EvidenceContract:GetEvidenceByReport',
       req.params.reportId
     );
     res.json({ success: true, data: result });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.details || err.message });
+    console.error('Get evidence error:', err.details);
   }
 });
 
@@ -89,9 +90,12 @@ router.get('/report/:reportId', requireOrg('Org2MSP', 'Org3MSP'), async (req, re
 router.get('/retrieve/:cid', requireOrg('Org2MSP', 'Org3MSP'), async (req, res) => {
   try {
     const { data, contentType } = await getFromIPFS(req.params.cid);
-    res.set('Content-Type', contentType);
+    console.log("CID:", req.params.cid);
+    console.log("DATA LENGTH:", data?.length);   // 🔥 ADD THIS
+    console.log("CONTENT TYPE:", contentType);
+    res.set('Content-Type', contentType || 'application/octet-stream');
     res.set('Content-Disposition', `inline`);
-    res.send(Buffer.from(data));
+    res.send(data);
   } catch (err) {
     res.status(500).json({ error: 'Could not retrieve file from IPFS: ' + err.message });
   }

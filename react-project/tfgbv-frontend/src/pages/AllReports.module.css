@@ -120,3 +120,216 @@
   display: flex;
   gap: 6px;
 }
+
+/* images */
+/* ─── Paste these rules into your existing AllReports.module.css ─── */
+
+/* Section label row (label + reload button side by side) */
+.sLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sLabelRow .sLabel {
+  margin-bottom: 0;
+}
+
+.reloadBtn {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--tc-text-muted, #4e5466);
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.reloadBtn:hover {
+  color: var(--tc-text-secondary, #8a90a0);
+  background: var(--tc-surface, rgba(255, 255, 255, 0.05));
+}
+
+/* Locked state (Org3 before REFERRED) */
+.evidenceLocked {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--color-background-warning, rgba(251, 191, 36, 0.08));
+  border: 1px solid var(--color-border-warning, rgba(251, 191, 36, 0.2));
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.evidenceLocked svg {
+  flex-shrink: 0;
+  color: var(--color-text-warning, #fbbf24);
+}
+
+/* Loading placeholder */
+.evidenceLoading {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+/* Empty text */
+.evidenceEmpty {
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  padding: 6px 0 2px;
+}
+
+/* Grid of evidence cards */
+.evidenceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+/* Individual evidence card */
+.evidenceCard {
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-background-secondary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image thumbnail */
+.evidenceThumbBtn {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.evidenceThumb {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s;
+}
+
+.evidenceThumbBtn:hover .evidenceThumb {
+  transform: scale(1.04);
+}
+
+.evidenceThumbOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.evidenceThumbBtn:hover .evidenceThumbOverlay {
+  opacity: 1;
+}
+
+/* PDF link card */
+.evidencePdf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 10px;
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  text-align: center;
+  transition: color 0.15s, background 0.15s;
+  flex: 1;
+}
+
+.evidencePdf:hover {
+  color: var(--color-text-info);
+  background: var(--color-background-info);
+}
+
+/* Video */
+.evidenceVideo {
+  width: 100%;
+  display: block;
+  max-height: 180px;
+}
+
+/* Caption below each card */
+.evidenceCaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border-top: 1px solid var(--color-border-tertiary);
+}
+
+.evidenceFilename {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.evidenceDate {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+/* ─── Lightbox ─── */
+.lightboxBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.15s;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+}

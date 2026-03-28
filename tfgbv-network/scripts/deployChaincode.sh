@@ -6,8 +6,8 @@ FABRIC_BIN=~/fabric-dev/fabric-samples/bin
 CHAINCODE_DIR=~/fabric-dev/tfgbv-chaincode
 CHANNEL_NAME=safechannel
 CC_NAME=tfgbv
-CC_VERSION=1.1
-CC_SEQUENCE=6
+CC_VERSION=1.2
+CC_SEQUENCE=7
 
 export PATH=$FABRIC_BIN:$PATH
 

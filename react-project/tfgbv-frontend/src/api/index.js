@@ -23,6 +23,9 @@ api.interceptors.request.use((config) => {
 });
 api.interceptors.response.use(
   (res) => {
+    if (res.config.responseType === 'arraybuffer' || res.config.responseType === 'blob') {
+      return res.data;
+    }
     const json = res.data;
 
     if (json.error) throw new Error(json.error);
@@ -77,18 +80,20 @@ export const getAuditLog = async (org, reportId) =>
   await api.get(`/reports/${reportId}/audit`, { headers: orgHeaders(org) });
 
 // Evidence
-export const registerEvidence = async (body) =>
-  await api.post('/evidence', body);
+export const registerEvidence = async (body, org) =>
+  await api.post('/evidence', body, { headers: orgHeaders(org) } );
 
 export const verifyEvidence = async (body) =>
   await api.post('/evidence/verify', body);
 
-export const getEvidenceByReport = async (reportId) =>
-  await api.get(`/evidence/report/${reportId}`);
+export const getEvidenceByReport = async (org, reportId) =>
+  await api.get(`/evidence/report/${reportId}`, { headers: orgHeaders(org) });
 
 export const markEvidenceVerified = async (evidenceId, notes) =>
   await api.put(`/evidence/${evidenceId}/verify`,  { notes });
 
+export const retrieveFileFromIPFS = async (org, cid) =>
+  await api.get(`/evidence/retrieve/${cid}`, { headers: orgHeaders(org), responseType: 'arraybuffer' });
 // Referrals
 export const createReferral = async (org, body) =>
   await api.post('/referrals', body, { headers: orgHeaders(org) });
