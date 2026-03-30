@@ -1,5 +1,5 @@
 fabric-samples/
-fabric-explorer/
+# fabric-explorer/
 !react-project/tfgbv-frontend
 install-fabric.sh
 .vscode/
